@@ -1,0 +1,18 @@
+﻿@using _1265125_MVC.Models
+@{
+    EducationalInfo educationalData = this.ViewData.ContainsKey("educationalInfo") ? (EducationalInfo)this.ViewData["educationalInfo"] : null;
+}
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <p>Highest Degree:  <span>@educationalData.HighestDegree</span></p>
+        <p>Subject:   <span>@educationalData.Subject</span></p>
+        <p>Passing Year:  <span>@educationalData.PassingYear</span></p>
+        <p>CGPA:   <span>@educationalData.CGPA</span></p>
+        <p>Training:   <span>@educationalData.Training</span></p>
+        <p>Duration:    <span>@educationalData.Duration</span></p>
+
+    </div>
+    <div class="col-md-2"></div>
+</div>

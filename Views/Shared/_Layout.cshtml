@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("NOVARTIS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", style = "color:dodgerblue; font-weight:bold" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Employee Registration", "Insert", "PersonalInfo")</li>
+                    <li>@Html.ActionLink("View Employees", "Index", "PersonalInfo")</li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li style="margin-top:10px">
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class=" body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p style="font-weight:bolder">&copy; @DateTime.Now.Year -NOVARTIS Medical Solution</p>
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    
+</body>
+</html>

@@ -1,0 +1,143 @@
+﻿@model _1265125_MVC.ViewModel.DivisionDistrictViewModel
+
+<style>
+    input,
+    select,
+    textarea {
+    max-width: 280px;
+}
+</style>
+
+@*<ol>
+    @{ 
+        if(ViewBag.Err != null)
+            {
+                foreach (var item in ViewBag.Err)
+                {
+                    <li>@item</li>
+                }
+            }
+    }
+</ol>*@
+
+@using (Ajax.BeginForm("Insert", "PersonalInfo", "",
+    new AjaxOptions { OnSuccess = "submitSuccess", OnFailure = "submitFailure", HttpMethod = "POST" }, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <div class="row">
+            <div class="col-md-3">
+                <img src="~/Helll.jpg" style="height:800px; width:1500px"/>
+
+            </div>
+            <div class="col-md-4"  style="margin-top:100px">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label class="control-label" style="color:white">Name</label>
+                    <div>
+                        @Html.TextBox("Name", "", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" style="color:white">Date of Birth</label>
+                    <div>
+                        <input type="date" name="DoB" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" style="color:white">Gender</label>
+                    <div>
+                        <label for="rdMale" style="color:white">Male</label>
+                        <input type="radio" name="Gender" value="Male" id="rdMale" style="padding: 10px; margin-left: 10px" />
+                        <label for="rdFemale" style="color: white; margin-left: 50px">Female</label>
+                        <input type="radio" name="Gender" value="Female" id="rdFemale" style="padding: 10px; margin-left: 10px" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" style="color:white">Phone</label>
+                    <div>
+                        @Html.TextBox("Phone", "", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class=" control-label" style="color:white">Email</label>
+                    <div>
+                        @Html.TextBox("Email", "", new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4"  style="margin-top:100px">
+                
+
+                <div class="form-group">
+                    <label class="control-label" style="color:white">Address</label>
+                    <div>
+                        @Html.TextArea("Address", "", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class=" control-label" style="color:white">Image</label>
+                    <div>
+                        <input type="file" class="form-control" name="Image" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class=" control-label" style="color:white">Division</label>
+                    @if (ViewBag.DivisionLists != null)
+                    {
+                        @Html.DropDownListFor(m => m.DivisionId, ViewBag.DivisionLists as SelectList, "--Select Division--", new { @class = "form-control" })
+                    }
+                </div>
+                <div class="form-group">
+                    <label class=" control-label" style="color:white">District</label>
+                    @Html.DropDownListFor(m => m.DistrictId, new SelectList(" "), "--Select District--", new { @class = "form-control" })
+
+
+                </div>
+                <div class="form-group">
+                    <div>
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                    </div><br /><br />
+                    <div>
+                        @Html.ActionLink("Educational Form", "Insert", "EducationalInfo")
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+}
+
+<script>
+
+
+    $(document).ready(function () {
+        $("#DivisionId").change(function () {
+            $.get("/PersonalInfo/GetDistrictList", { DivisionId: $("#DivisionId").val() }, function (data) {
+                $("#DistrictId").empty();
+                $.each(data, function (index, row) {
+                    $("#DistrictId").append("<option value='" + row.DistrictId + "'>" + row.DistrictName + "</option>")
+                });
+            });
+        });
+    })
+    function submitSuccess() {
+        alert("Data Inserted Successfully");
+    }
+
+    function submitFailure() {
+        alert("Data Inserted Failed");
+    }
+</script>
+
+
+

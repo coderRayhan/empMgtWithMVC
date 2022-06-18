@@ -1,0 +1,18 @@
+﻿@using _1265125_MVC.Models
+@{
+    EmploymentInfo employmentData = this.ViewData.ContainsKey("employmentInfo") ? (EmploymentInfo)this.ViewData["employmentInfo"] : null;
+}
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <p>Highest Degree:    <span>@employmentData.Department.DepName</span></p>
+        <p>Subject:    <span>@employmentData.Designation</span></p>
+        <p>Passing Year:  <span>@employmentData.Salary</span></p>
+        <p>CGPA:    <span>@employmentData.ReferenceName</span></p>
+        <p>Training:  <span>@employmentData.ReferencePhone</span></p>
+
+    </div>
+    <div class="col-md-2"></div>
+</div>
+

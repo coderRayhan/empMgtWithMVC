@@ -1,0 +1,158 @@
+﻿@using _1265125_MVC.Models
+@model _1265125_MVC.Models.PersonalInfo
+
+@{
+    ViewBag.Title = "Edit";
+    var personalData =(PersonalInfo) TempData["pInfo"];
+    var educationalData = (EducationalInfo)TempData["eduInfo"];
+    var employmentData = (EmploymentInfo)TempData["empInfo"];
+    var depData = (IEnumerable<Department>)TempData["depInfo"];
+}
+<style>
+    input,
+    select,
+    textarea {
+        max-width: 280px;
+    }
+    label {
+        color: white;
+    }
+</style>
+
+<form method="post" action="Edit" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-1">
+            <img src="~/Content/background-learner1.jpg"  style="height:800px; width:1500px" />
+        </div>
+        <div class="col-md-4" style="margin-top:30px">
+            <div class="form-group">
+                <label class="form-label">EmployeeId</label>
+                <input type="text" name="EmployeeId" class="form-control" value="@personalData.EmployeeId" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Name</label>
+                <input type="text" name="Name" class="form-control" value="@personalData.Name" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Date of Birth</label>
+                <input type="date" name="DoB" class="form-control" value="" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Gender</label>
+                @if (personalData.Gender == "Male")
+                {
+                    <label for="rdMale">Male</label>
+                    <input type="radio" name="Gender" value="Male" checked="checked" id="rdMale" />
+                }
+
+                Female: <input type="radio" name="Gender" value="Female" checked="checked" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Phone</label>
+                <input type="text" name="Phone" class="form-control" value="@personalData.Phone" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="text" name="Email" class="form-control" value="@personalData.Email" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Address</label>
+                <input type="text" name="Address" class="form-control" value="@personalData.Address" />
+            </div>
+        </div>
+        <div class="col-md-3" style="margin-top:30px">
+            <div class="form-group">
+                <label class=" control-label">Division</label>
+                @if (ViewBag.DivisionLists != null)
+                {
+                    @Html.DropDownListFor(m => m.DivisionId, ViewBag.DivisionLists as SelectList, "--Select Division--", new { @class = "form-control" })
+                }
+            </div>
+            <div class="form-group">
+                <label class=" control-label">District</label>
+                @Html.DropDownListFor(m => m.DistrictId, new SelectList(" "), "--Select District--", new { @class = "form-control" })
+
+
+            </div>
+            <div class="form-group">
+                <label class="form-label">Image</label>
+                <input type="file" name="Image" class="form-control" value="" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Highest Degree</label>
+                <input type="text" name="HighestDegree" class="form-control" value="@educationalData.HighestDegree" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Subject</label>
+                <input type="text" name="Subject" class="form-control" value="@educationalData.Subject" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Passing Year</label>
+                <input type="number" name="PassingYear" class="form-control" value="@educationalData.PassingYear" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">CGPA</label>
+                <input type="number" name="CGPA" class="form-control" value="@educationalData.CGPA" />
+            </div>
+        </div>
+        <div class="col-md-4" style="margin-top:30px">
+            <div class="form-group">
+                <label class="form-label">Training</label>
+                <input type="text" name="Training" class="form-control" value="@educationalData.Training" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Duration</label>
+                <input type="text" name="Duration" class="form-control" value="@educationalData.Duration" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Department</label>
+                <select name="DepartmentId" class="form-control">
+                    <option value="-1">--Select a Department--</option>
+                    @foreach (var item in depData)
+                    {
+                        <option value="@item.DepartmentId">@item.DepName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Designation</label>
+                <input type="text" name="Designation" class="form-control" value="@employmentData.Designation" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Salary</label>
+                <input type="number" name="Salary" class="form-control" value="@employmentData.Salary" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Reference Name</label>
+                <input type="text" name="ReferenceName" class="form-control" value="@employmentData.ReferenceName" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Reference Phone</label>
+                <input type="number" name="ReferencePhone" class="form-control" value="@employmentData.ReferencePhone" />
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Submit" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+
+
+    $(document).ready(function () {
+        $("#DivisionId").change(function () {
+            $.get("/PersonalInfo/GetDistrictList", { DivisionId: $("#DivisionId").val() }, function (data) {
+                $("#DistrictId").empty();
+                $.each(data, function (index, row) {
+                    $("#DistrictId").append("<option value='" + row.DistrictId + "'>" + row.DistrictName + "</option>")
+                });
+            });
+        });
+    })
+</script>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

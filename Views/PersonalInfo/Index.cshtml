@@ -1,0 +1,127 @@
+﻿@using _1265125_MVC.Models
+@model IEnumerable<PersonalInfo>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    input{
+        max-width: 280px;
+        margin-top:40px
+    }
+</style>
+
+<div class="form-group">
+    @using (Html.BeginForm())
+    {
+        <p>
+            @Html.TextBox("searchString", null, new { @class = "form-control col-md-3", @placeholder = "Search..." })
+            &nbsp;<input type="submit" class="btn btn-primary" value="Submit" />
+        </p>
+    }
+</div>
+<div class="container">
+    <div class="row">
+
+        @foreach (var employee in Model)
+        {
+            <div class="col-md-4">
+                <div class="card-deck">
+                    <div class="card m-3" style="min-width:15rem; max-width:25%;">
+                        <div class="card-header">
+                            <h5>ID: @employee.EmployeeId</h5>
+                            <h4>Name: @employee.Name</h4>
+                        </div>
+                        <img class="card-img-top imageThumbnail" src="@Url.Content(employee.Image)" height="250" width="250" />
+
+                        <div class="card-footer">
+                            @foreach (var item in ViewBag.Emp)
+                            {
+                                if (employee.EmployeeId == item.EmployeeId)
+                                {
+                                    <h5>Department: @item.Department.DepName</h5>
+                                    <h5>Designation: @item.Designation</h5>
+                                }
+                            }
+
+                            <a href="@Url.Action("viewData", "Home", new { EmployeeId = employee.EmployeeId})" class="btn btn-primary">View</a>
+                            <a href="@Url.Action("Edit", "Home", new { EmployeeId = employee.EmployeeId})" class="btn btn-primary">Edit</a>
+                            <a class="btn btn-danger" onclick="ConfirmDelete(@employee.EmployeeId)" data-target="#myModal" data-model="model">Delete</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <input type="hidden" id="hiddenEmployeeId" />
+    </div>
+            </div>
+
+
+
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h3 class="modal-title">Delete Employee</h3>
+            </div>
+            <div class="modal-body">
+                <h4>Are you sure ? You want to delete this. </h4>
+
+                <div style="text-align:center;display:none" id="loaderDiv">
+                    <img src="~/Content/loader.gif" style="height:200px;width:200px"  />
+                        @*<img src="~/Content/img/2xkV.gif" style="height:200px;width:200px" />*@
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+                <a href="#" class="btn btn-success" onclick="DeleteEmployee()">Confirm</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    var ConfirmDelete = function (EmployeeId) {
+
+        $("#hiddenEmployeeId").val(EmployeeId);
+        $("#myModal").modal('show');
+
+    }
+
+    var DeleteEmployee = function () {
+
+        $("#loaderDiv").show();
+
+        var empId = $("#hiddenEmployeeId").val();
+
+        $.ajax({
+
+            type: "POST",
+            url: "/PersonalInfo/Delete/" + empId,
+            data: { EmployeeId: empId },
+            success: function (result) {
+                $("#loaderDiv").hide();
+                $("#myModal").modal("hide");
+
+            }
+
+        })
+
+    }
+</script>
+
+
+
+
+

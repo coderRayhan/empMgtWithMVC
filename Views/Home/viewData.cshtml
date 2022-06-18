@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "viewData";
+}
+
+@{ 
+    var personalInfo = TempData["personalInfo"];
+    var educationalInfo = TempData["educationalInfo"];
+    var employmentInfo = TempData["employmentInfo"];
+}
+
+<h2>Image</h2>
+
+<div class="row">
+    @*<div class="col-md-4">
+    </div>*@
+    <div class="col-md-8">
+        @Html.Partial("_PersonalData", null, new ViewDataDictionary { { "personalInfo", personalInfo} })
+    </div>
+    <div class="col-md-4">
+        @Html.Partial("_EducationalData", null, new ViewDataDictionary { { "educationalInfo", educationalInfo } })
+        @Html.Partial("_EmploymentData", null, new ViewDataDictionary { { "employmentInfo", employmentInfo } })
+    </div>
+</div>
+

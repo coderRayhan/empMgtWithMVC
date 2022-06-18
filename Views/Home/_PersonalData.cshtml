@@ -1,0 +1,33 @@
+﻿@using _1265125_MVC.Models
+@{ 
+    PersonalInfo personalData = this.ViewData.ContainsKey("personalInfo") ? (PersonalInfo)this.ViewData["personalInfo"] : null;
+}
+
+<style>
+    p{
+        font-size:18px;
+        font-weight:bold;
+        color:purple;
+    }
+    span{
+        color:dimgrey;
+    }
+</style>
+<div class="row">
+    <div class="col-md-4">
+        <img src="@Url.Content(personalData.Image)" height="300" width="250" />
+    </div>
+    <div class="col-md-6" style="margin-left:50px">
+        <p>Employee ID:   <span>@personalData.EmployeeId</span></p>
+        <p>Name:  <span>@personalData.Name</span></p>
+        <p>Date of Birth:  <span>@personalData.DoB</span></p>
+        <p>Gender:  <span>@personalData.Gender</span></p>
+        <p>Phone:  <span>@personalData.Phone</span></p>
+        <p>Email:  <span>@personalData.Email</span></p>
+        <p>Address:  <span>@personalData.Address</span></p>
+        <p>Division:  <span>@personalData.Division.DivName</span></p>
+        <p>District:   <span>@personalData.District.DistrictName</span></p>
+        
+    </div>
+    <div class="col-md-2"></div>
+</div>

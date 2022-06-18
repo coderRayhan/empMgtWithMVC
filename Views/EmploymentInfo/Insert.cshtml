@@ -1,0 +1,122 @@
+﻿@model _1265125_MVC.Models.EmploymentInfo
+
+@{
+    ViewBag.Title = "Insert";
+}
+<style>
+    label{
+        color:white;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-4">
+        <img src="~/Content/R.jpg"  style="height:800px; width:1500px"/>
+    </div>
+    <div class="col-md-4">
+        @using (Html.BeginForm("Insert", "EmploymentInfo", "", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>EmploymentInfo</h4>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EmployeeId, "EmployeeId", htmlAttributes: new { @class = "control-label" })
+                    <div class="">
+                        <select name="EmployeeId" onchange="getValue()" id="EmployeeId" class="form-control">
+                            <option value="">--Select an Employee--</option>
+                            @foreach (var item in ViewBag.Personal)
+                            {
+                                <option value="@item.EmployeeId">@item.EmployeeId</option>
+                            }
+                        </select>
+                        @Html.ValidationMessageFor(model => model.EmployeeId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DepartmentId, "DepartmentId", htmlAttributes: new { @class = "control-label " })
+                    <div class="">
+                        <select name="DepartmentId" class="form-control">
+                            <option value="-1">--Select a Department--</option>
+                            @foreach (var item in ViewBag.Data)
+                            {
+                                <option value="@item.DepartmentId">@item.DepName</option>
+                            }
+                        </select>
+                        @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Designation, htmlAttributes: new { @class = "control-label" })
+                    <div class="">
+                        @Html.EditorFor(model => model.Designation, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Salary, htmlAttributes: new { @class = "control-label " })
+                    <div class="">
+                        @Html.EditorFor(model => model.Salary, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Salary, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ReferenceName, htmlAttributes: new { @class = "control-label" })
+                    <div class="">
+                        @Html.EditorFor(model => model.ReferenceName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ReferenceName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ReferencePhone, htmlAttributes: new { @class = "control-label" })
+                    <div class="">
+                        @Html.EditorFor(model => model.ReferencePhone, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ReferencePhone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+@*<script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "/EmploymentInfo/GetEmployeeName",
+                data: "{}",
+                success: function (data) {
+                    var option = '<option value="">Please Select an Employee</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        option += '<option value="' + data[i].Name + '">' + data[i].EmployeeId + '</option>';
+                    }
+                    $("#EmployeeId").html(option);
+                }
+            });
+        });
+
+        function getValue() {
+            var empVal = $("#EmployeeId").val();
+            $("#EmployeeName").val(empVal);
+        }
+    </script>*@
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
